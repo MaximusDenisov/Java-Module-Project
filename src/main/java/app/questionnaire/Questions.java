@@ -11,7 +11,7 @@ public class Questions {
     static Scanner scanner = new Scanner(System.in).useDelimiter("\\n");
 
     // Метод для получения кол-ва человек от пользователя
-    public static int getCountOfPeople() {
+    public int getCountOfPeople() {
         while (true) {
             System.out.print("\nВведите количество человек для разделения счёта: ");
             try {
@@ -30,7 +30,8 @@ public class Questions {
     }
 
     // Метод для создания товаров и помещения их в корзину
-    public static ArrayList<Product> getProductCart(ArrayList<Product> products) {
+    public ArrayList<Product> getProductCart() {
+        ArrayList<Product> products = new ArrayList<>();
         boolean needMore = true;
         while (needMore) {
             try {
@@ -56,20 +57,14 @@ public class Questions {
 
         System.out.println("\nДобавленные товары:\n______________________");
         for (Product product : products) {
-            System.out.println("Название: " + product.name + "\nЦена: " + String.format("%.2f", product.cost) + "\n______________________");
+//            System.out.println("Название: " + product.name + "\nЦена: " + String.format("%.2f", product.cost) + "\n______________________");
+            System.out.printf("Название: %s%nЦена: %.2f%n______________________%n", product.name, product.cost);
         }
         return products;
     }
 
-    // Метод для определения, необходимо ли клиенту указать ещё товар
-    public static boolean isNeedMore() {
-        System.out.print("Нужно ли добавить ещё товар? (Введите 'Завершить' для того, чтобы посчитать стоимость, либо любое другое значение для продолжения): ");
-        String answer = scanner.next();
-        return !answer.toLowerCase().equals("завершить");
-    }
-
     // Метод для указывания стоимости товара
-    private static double getCostOfProduct() {
+    private double getCostOfProduct() {
         // Получаем цену товара
         double cost = 0.0;
         while (cost <= 0) {
@@ -84,5 +79,12 @@ public class Questions {
             }
         }
         return cost;
+    }
+
+    // Метод для определения, необходимо ли клиенту указать ещё товар
+    public static boolean isNeedMore() {
+        System.out.print("Нужно ли добавить ещё товар? (Введите 'Завершить' для того, чтобы посчитать стоимость, либо любое другое значение для продолжения): ");
+        String answer = scanner.next();
+        return !answer.toLowerCase().equals("завершить");
     }
 }

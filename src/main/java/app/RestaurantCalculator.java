@@ -1,32 +1,31 @@
 package app;
 
-import java.util.ArrayList;
-
 import app.calc.Calculator;
-import app.calc.Product;
 import app.questionnaire.Questions;
-import app.utils.Namer;
+import app.utils.Formatter;
 
 public class RestaurantCalculator {
 
-    public static void start() {
+    public void start() {
 
         System.out.println("\nДобро пожаловать в приложение для расчёта раздельной оплаты заказа");
 
-        //Пользователь вводит кол-во посетителей
-        int count = Questions.getCountOfPeople();
+        //Создаём объекты классов Calculator, Questions, Formatter -> Java.way
+        Calculator calculator = new Calculator();
+        Questions questions = new Questions();
+        Formatter formatter = new Formatter();
 
-        //Объявляем "корзину" с покупками
-        ArrayList<Product> products = new ArrayList<>();
+        //Пользователь вводит кол-во посетителей
+        calculator.setCount(questions.getCountOfPeople());
 
         //Пользователь вводит кол-во товаров для приобретения
-        Questions.getProductCart(products);
+        calculator.setProductList(questions.getProductCart());
 
-        //Высчитываем долю каждого из посетителей
-        double cost = Calculator.calculateSumForEveryone(products, count);
+        //Получаем долю которую должен оплатить каждый
+        double cost = calculator.calculateSumForEveryone();
 
         //Определяем склонение рубля
-        String currency = Namer.getCurrency(cost);
+        String currency = formatter.getCurrency(cost);
 
         //Выводим пользователю значение
         System.out.println("\nКаждому необходимо заплатить: " + String.format("%.2f", cost) + " " + currency);
